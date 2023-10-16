@@ -227,3 +227,10 @@
     transform: rotate(0deg);
   }
 }
+
+.forms {
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
+  gap: 10px;
+}

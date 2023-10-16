@@ -1,95 +1,101 @@
-import Image from 'next/image'
+// @ts-nocheck
+// @ts-ignore
+/* eslint-disable */
+// use client
+
+import { useState, useEffect } from 'react'
 import styles from './page.module.css'
 
 export default function Home() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+
+  const [loginState, setLoginState] = useState({
+    email: '',
+    password: ''
+  })
+
+  const handleSignupForm = (event) => {
+    event.preventDefault()
+    console.log({ name, email, password })
+  }
+
+  const handleOnChangeLogin = (event, key) => {
+    setLoginState({ ...loginState, [key]: event.target.value })
+  }
+
+  const handleLoginForm = (event) => {
+    event.preventDefault()
+  }
+
+  const [search, setSearch] = useState('')
+
+  useEffect(() => {
+    if (search.length > 2) {
+      console.log(`Realizando busca para '${search}'`)
+    }
+  }, [search])
+
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
+    <div className={styles.container}>
+      <form className={styles.forms} onSubmit={handleSignupForm}>
+        <h1>Formulário de Cadastro</h1>
+        <input
+          type='text'
+          placeholder='Nome completo'
+          required
+          value={name}
+          onChange={(event) => setName(event.target.value)}
         />
-      </div>
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+        <input
+          type='email'
+          placeholder='Email'
+          required
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+        />
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+        <input
+          type='password'
+          placeholder='Senha'
+          required
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+        />
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
+        <button type='submit'>Enviar</button>
+      </form>
+      <form className={styles.forms} onSubmit={handleLoginForm}>
+        <h1>Formulário de Login</h1>
+        <input
+          type='email'
+          placeholder='Email'
+          required
+          value={loginState.email}
+          onChange={(event) => handleOnChangeLogin(event, 'password')}
+        />
+        <input
+          type='password'
+          placeholder='Senha'
+          required
+          value={loginState.password}
+          onChange={(event) => handleOnChangeLogin(event, 'password')}
+        />
+        <button type='submit'>Entrar</button>
+      </form>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+      <form className={styles.forms}>
+        <h1>Formulário de busca automática</h1>
+        <input
+          type='text'
+          placeholder='Digite sua busca:'
+          value={search}
+          onChange={(event) => setSearch(event.target.value)}
+
+        />
+      </form>
+    </div>
   )
 }
